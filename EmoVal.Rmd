@@ -89,7 +89,7 @@ emodf$Time=ms(emodf$Video.Time)
 funs=list(mean=~mean(., na.rm=TRUE), sd=~sd(., na.rm=TRUE))
 ```
 
-```{r, allrespcheck, echo=FALSE, warning=FALSE}
+```{r, allrespcheck, include=TRUE, echo=FALSE, warning=FALSE}
 temp1= emodf %>%
   group_by(Sub, group) %>%
   summarise_at("Valence", funs)
@@ -100,6 +100,7 @@ Alltime_Estats=bind_rows(temp1, temp2)
 Alltime_Estats$Sub=ifelse(is.na(Alltime_Estats$Sub), "Overall", 
                           Alltime_Estats$Sub)
 rm(temp2)
+Alltime_Estats
 ```
 
 ## Graph, Average Valence between Groups
@@ -113,7 +114,7 @@ xyplot(mean~group, temp1, groups = Sub, type='p', cex=2,
 ## T Test and GLMM
 
 Note, using a Nelder Mead Model instead of REML (standard) due to fit warnings with restricted max likelihood
-```{r, allttest, include=TRUE}
+```{r, allttest, include=TRUE, echo=FALSE}
 t.test(mean~group, data=temp1, na.rm=TRUE,
        paired=TRUE)
 cohensD(mean~group, data=temp1)
